@@ -1,0 +1,39 @@
+body{
+    background-image: url(https://kidsmartapp.co.uk/content/wp-content/uploads/2019/07/maths-chalkboard-1.jpg);
+}
+.calculator{
+    display: block;
+    margin: 0 auto;
+    margin-top: 80px;
+    padding: 20px;
+    background-color: rgb(173, 39, 39);
+    width: 305px;
+    height: 500px;
+    border-radius: 25px;
+    border:2px solid black
+}
+
+.calculator td button{
+    display: block;
+    width: 60px;
+    height: 60px;
+    font-size: 25px;
+    border-radius: 15px;
+    border-color: black;
+    background-color: azure;
+}
+
+#result{
+    display: block;
+    text-align: center;
+    font-size: 40px;
+    margin-top: 30px;
+    margin-bottom: 40px;
+    width: 250px;
+    height: 100px;
+    line-height: 100px;
+    background-color: azure;
+    border-radius: 25px;
+    border:2px solid black
+    /*overflow-y: scroll;*/
+}
