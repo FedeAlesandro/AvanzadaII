@@ -34,8 +34,8 @@ function getUsers(url){
     });
 }
 
-window.onload = async function createPages(){
-    await getUsers("https://utn-avanzanda2-tp5.herokuapp.com/api/User/Total")
+/* window.onload = function createPages(){
+    getUsers("https://utn-avanzanda2-tp5.herokuapp.com/api/User/Total")
     .then(resolve => {
         let i = 0;
         while(i < (resolve/amountPages)){
@@ -54,11 +54,33 @@ window.onload = async function createPages(){
     .catch(reject => {
         console.log(Error(reject));
     })
+} */
+
+
+window.onload = async function createPages(){
+    try{
+        let resolve = await getUsers("https://utn-avanzanda2-tp5.herokuapp.com/api/User/Total");
+        let i = 0;
+        while(i < (resolve/amountPages)){
+            let btn = document.createElement("button");
+            btn.id = "btn" + i;
+            btn.append(document.createTextNode(i+1));
+            pageBtn.append(btn);
+            let newBtn = document.querySelector("#btn" + i);
+            btnOnClick(i, newBtn);
+            if(((i+1) % 20) == 0){
+                pageBtn.append(document.createElement("br"));
+            }
+            i++;
+        }
+    }catch(error){
+        console.log(error.message);
+    }
 }
 
-allUsers.onclick = async () => {
+/* allUsers.onclick = () => {
     tbody.textContent = " ";
-    await getUsers("https://utn-avanzanda2-tp5.herokuapp.com/api/User")
+    getUsers("https://utn-avanzanda2-tp5.herokuapp.com/api/User")
     .then(resolve => {
         for(user of resolve){
             let tr = document.createElement("tr");
@@ -73,14 +95,32 @@ allUsers.onclick = async () => {
     .catch(reject => {
         console.log(Error(reject))
     })
+} */
+
+allUsers.onclick = async () => {
+    tbody.textContent = " ";
+    try{
+        let resolve = await getUsers(`https://utn-avanzanda2-tp5.herokuapp.com/api/User`);
+        for(user of resolve){
+            let tr = document.createElement("tr");
+            for(value in user){
+                let td = document.createElement("td");
+                td.append(document.createTextNode(user[value]));
+                tr.append(td);
+            }
+            tbody.append(tr);
+        }
+    }catch(error){
+        console.log(error.message);
+    }
 }
 
-function btnOnClick (i, newBtn) {
-    newBtn.onclick = async () => {
+/* function btnOnClick (i, newBtn) {
+    newBtn.onclick = () => {
         tbody.textContent = " ";
         to = (i+1)*amountPages;
         from = to-(amountPages-1);
-        await getUsers(`https://utn-avanzanda2-tp5.herokuapp.com/api/User/${from}/${to}`)
+        getUsers(`https://utn-avanzanda2-tp5.herokuapp.com/api/User/${from}/${to}`)
         .then(resolve => {
             for(user of resolve){
                 let tr = document.createElement("tr");
@@ -95,5 +135,27 @@ function btnOnClick (i, newBtn) {
         .catch(reject => {
             console.log(Error(reject))
         })
+    }
+} */
+
+function btnOnClick (i, newBtn) {
+    newBtn.onclick = async () => {
+        tbody.textContent = " ";
+        to = (i+1)*amountPages;
+        from = to-(amountPages-1);
+        try{
+            let resolve = await getUsers(`https://utn-avanzanda2-tp5.herokuapp.com/api/User/${from}/${to}`);
+            for(user of resolve){
+                let tr = document.createElement("tr");
+                for(value in user){
+                    let td = document.createElement("td");
+                    td.append(document.createTextNode(user[value]));
+                    tr.append(td);
+                }
+                tbody.append(tr);
+            }
+        }catch(error){
+            console.log(error.message);
+        }
     }
 }
