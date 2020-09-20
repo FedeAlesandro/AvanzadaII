@@ -3,17 +3,6 @@ const allUsers = document.querySelector("#allBtn");
 const pageBtn = document.querySelector("#pageBtn");
 const amountPages = 10;
 
-class User {
-    constructor(userId, firstName, lastName, email, gender, lastConnectedAddress) {
-        this.userId = userId;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.gender = gender;
-        this.lastConnectedAddress = lastConnectedAddress;
-    }
-}
-
 function getUsers(url){
     return new Promise((resolve, reject) => {
         let request = new XMLHttpRequest();
