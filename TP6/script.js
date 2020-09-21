@@ -41,10 +41,9 @@ function get(url) {
 
 function post(url, json) {
     return new Promise((resolve, reject) => {
-         
         let xhr = new XMLHttpRequest();
-        xhr.open("POST", url);
-        xhr.setRequestHeader('Content-type', 'application/json');
+        xhr.open("POST", url, false);
+        xhr.setRequestHeader('Content-Type', 'application/json');
         xhr.onload  =  () => {
             if (xhr.status <= 300) {
                 resolve(xhr.response);
@@ -136,8 +135,7 @@ async function getEmployees() {
 
 async function postEmployee(data) {
     try {
-        let urlAdd = "Employee/";
-            
+        let urlAdd = "Employee/";            
         let json = JSON.stringify(data);
         await post(`${url}${urlAdd}`, json);
     } catch (error) {
@@ -145,17 +143,19 @@ async function postEmployee(data) {
     }
 }
 
-async function deleteEmployee(){
+async function deleteEmployee(id){
     try {
         let urlAdd = "Employee/";
-        let id = 1000;
         await deleteApi(`${url}${urlAdd}${id}`);
+        createPages();
     } catch (error) {
         console.log(error.message);
     }
 }
 
 async function createPages(){
+    tbody.textContent = "";
+    btnNav.textContent = "";
     let employeesWithCompany = await getEmployeesWithCompany();
     let size = getSize(employeesWithCompany);
     let i = 0;
@@ -183,10 +183,17 @@ function btnOnClick (i, newBtn, itemsPerPages, collection) {
         
         while(from < to){
             let value = collection[from];
+            let btnDelete = document.createElement("button");
+            let td = document.createElement("td");
             let tr = document.createElement("tr");
             for(item in value){
                 let td = document.createElement("td");
                 td.append(document.createTextNode(value[item]));
+                tr.append(td);
+            }
+            if(collection[from] != null){
+                btnOnDelete(btnDelete, collection[from].employeeId);
+                td.append(btnDelete);
                 tr.append(td);
             }
             tbody.append(tr);
@@ -195,11 +202,15 @@ function btnOnClick (i, newBtn, itemsPerPages, collection) {
     }
 }
 
-form.addEventListener("submit", sendData());
-
-function sendData(){
+function btnOnDelete (btn, i){
+    btn.append(document.createTextNode("Delete"));
+    btn.onclick = () => {
+        deleteEmployee(i);
+    }
+}
+form.onsubmit = function(){
     let data = {
-        companyId: companyId.value,
+        companyId: parseInt(companyId.value),
         firstName: firstName.value,
         lastName: lastName.value,
         email: email.value
