@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TP6</title>
+    <style>
+        #btnNav{
+            text-align: center;
+        }
+        table{
+            border: 1px solid black;
+            text-align: center;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        th{
+            border: 1px solid black;
+        }
+        td{
+            border: 1px solid black;
+        }
+    </style>
+</head>
+
+<body>
+    <form id="employeeForm" action="" method="GET">
+        Company id: <input type="number" name="companyId" id="companyId">
+        <br>
+        First name: <input type="text" name="firstName" id="firstName">
+        <br>
+        Last name: <input type="text" name="lastName" id="lastName">
+        <br>
+        Email: <input type="email" name="email" id="email">
+        <br><br>
+        <input type="submit">
+    </form>
+    
+    <br>
+    <table>
+        <thead>
+            <th>Employee id</th>
+            <th>Company id</th>
+            <th>Company name</th>
+            <th>First name</th>
+            <th>Last name</th>
+            <th>Email</th>
+        </thead>
+        <tbody id = "data">
+
+        </tbody>
+    </table>
+    <br>
+    <div id = "btnNav">
+
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>
