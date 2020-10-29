@@ -27,7 +27,7 @@ export class ClientAddComponentComponent implements OnInit {
 
   addClient() {
     let client = new Client();
-    client.clientId = this.clients.length + 1
+    client.clientId =  this.findId();
     client.firstName = this.firstName;
     client.lastName = this.lastName;
     client.dni = this.dni;
@@ -64,6 +64,16 @@ export class ClientAddComponentComponent implements OnInit {
 
   setClient(client: Client) {
     this.client = client;
+  }
+
+  private findId(){
+    let id: number = 1;
+
+    while (this.clients.find(client => client.clientId === id) != undefined){
+      id++;
+    }
+
+    return id;
   }
 
   render() {
