@@ -1,0 +1,30 @@
+<br>
+<div class="text-center container col-4">
+  <form class="justify-content-center">
+    <img class="mb-4" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
+    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+
+    <div class="form-group">
+      <label for="email" class="sr-only">Email address</label>
+      <input type="email" id="email" class="form-control" name="email" [(ngModel)]="email"
+        placeholder="Email address" required autofocus>
+    </div>
+    <div class="form-group">
+      <label for="pwd" class="sr-only">Password</label>
+      <input type="password" id="pwd" class="form-control" name="pwd" [(ngModel)]="pwd"
+        placeholder="Password" required>
+    </div>
+
+    <div class="col-4" style="margin: auto">
+      <button class="btn btn-lg btn-primary" type="button" (click)="login()">Login</button>
+    </div>
+    <br>
+    <div *ngIf="wrongUser" style="margin: auto;" class="alert alert-danger text-center col-10" role="alert">
+      <strong>Login failed...</strong>
+      <br>
+      <strong>Check your email, your password or both!</strong>
+  </div>
+  </form>
+</div>
+
+<router-outlet></router-outlet> 

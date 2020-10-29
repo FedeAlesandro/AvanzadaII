@@ -1,0 +1,40 @@
+<!-- LIST PRODUCTS-->
+<br>
+<div class="container col-8">
+    <h2 class="h2 text-center">Products</h2>
+    <hr>
+    <table class="table table-bordered table-striped text-center">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Product category id</th>
+                <th scope="col">Name</th>
+                <th scope="col">Description</th>
+                <th scope="col">Price</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let product of products">
+                <th scope="row">{{ product.productId }}</th>
+                <td>{{ product.productCategoryId }}</td>
+                <td>{{ product.name }}</td>
+                <td>{{ product.description }}</td>
+                <td>{{ product.price }}</td>
+                <td>
+                    <a class="btn btn-warning"  [routerLink]="['../../product/edit', product.productId]" routerLinkActive="active">
+                        Edit
+                    </a>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-danger" (click)="deleteProduct(product.productId)">
+                        Delete
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<router-outlet></router-outlet> 

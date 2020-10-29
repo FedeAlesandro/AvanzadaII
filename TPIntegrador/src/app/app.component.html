@@ -1,0 +1,41 @@
+<div *ngIf="router.url != '/' && router.url != '/unauthorized'">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark ml-auto">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item dropdown"  style="margin-right: 20px;">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Products
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" [routerLink]="['product/add']">Add products</a>
+                <!-- <a class="dropdown-item" [routerLink]="['product/add']" routerLinkActive="active">Add products</a> -->
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" [routerLink]="['product/list']">List products</a>
+                <!-- <a class="dropdown-item" [routerLink]="['product/list']" routerLinkActive="active">List products</a> -->
+              </div>
+            </li>
+            <li class="nav-item dropdown" style="margin-right: 20px;">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Product Categories
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item" [routerLink]="['category/add']">Add product category</a>
+                  <!-- <a class="dropdown-item" [routerLink]="['category/add']" routerLinkActive="active">Add product category</a> -->
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" [routerLink]="['category/list']">List product categories</a>
+                  <!-- <a class="dropdown-item" [routerLink]="['category/list']" routerLinkActive="active">List product categories</a> -->
+                </div>
+              </li>
+        </ul>
+    </nav>
+</div>
+<div *ngIf="router.url == '/'">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="https://www.linkedin.com/in/fedealesandro/">My LinkedIn</a>
+            </li>
+        </ul>
+    </nav>
+</div>
+
+<router-outlet></router-outlet> 

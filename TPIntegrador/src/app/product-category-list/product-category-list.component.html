@@ -1,0 +1,28 @@
+<!-- LIST PRODUCT CATEGORIES-->
+<div class="container col-8">
+    <br>
+    <h2 class="h2 text-center">Product categories</h2>
+    <hr>
+    <table class="table table-bordered table-striped text-center">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Description</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let productCategory of productCategories">
+                <th scope="row">{{ productCategory.productCategoryId }}</th>
+                <td>{{ productCategory.description }}</td>
+                <td>
+                    <a class="btn btn-warning"  [routerLink]="['../../category/edit', productCategory.productCategoryId]" routerLinkActive="active">
+                        Edit
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<router-outlet></router-outlet> 
