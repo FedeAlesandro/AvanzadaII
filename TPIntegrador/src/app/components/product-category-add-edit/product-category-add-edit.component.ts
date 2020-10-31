@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ProductCategory } from '../models/product-category';
-import { ProductCategoryService } from '../services/product-category.service';
-import { UserService } from '../services/user.service';
+import { ProductCategory } from '../../models/product-category';
+import { ProductCategoryService } from '../../services/product-category.service';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-product-category-add-edit',
@@ -56,7 +56,7 @@ export class ProductCategoryAddEditComponent implements OnInit {
     if (this.description != null)
       this.productCategory.description = this.description;
 
-    this.productCategoryService.save(this.productCategory)
+    this.productCategoryService.edit(this.productCategory)
       .then(response => {
         this.alert = true;
       })

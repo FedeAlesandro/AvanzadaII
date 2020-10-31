@@ -1,0 +1,76 @@
+<!-- ADD PRODUCT -->
+<form [formGroup]="productForm" (ngSubmit)="addProduct()" *ngIf="productId == 0" class="col-8 container">
+    <br>
+    <h2 class="text-center">Add a product</h2>
+    <hr>
+    <div class="col-10 container">
+        <div class="form-group">
+            <label for="productCategoryId">Product Category</label>
+            <select class="form-control" name="productCategoryId" id="productCategoryId"
+                formControlName="productCategoryId">
+                <option [value]="productCategory.productCategoryId" *ngFor="let productCategory of productCategories">
+                    {{productCategory.description}}</option>
+            </select>
+        </div>
+
+        <div class="form-group" [formGroup]="productForm">
+            <label for="name">Name</label>
+            <input type="text" class="form-control" name="name" id="name" formControlName="name"
+                placeholder="Enter your name">
+        </div>
+        <div class="form-group" [formGroup]="productForm">
+            <label for="description">Description</label>
+            <input type="text" class="form-control" name="description" id="description" formControlName="description"
+                placeholder="Enter the description">
+        </div>
+        <div class="form-group" [formGroup]="productForm">
+            <label for="price">Price</label>
+            <input type="number" class="form-control" name="price" id="price" formControlName="price"
+                placeholder="Enter the price">
+        </div>
+        <button type="submit" data-toggle="alert"
+            class="btn btn-lg btn-success float-right">Add</button>
+
+        <div *ngIf="alert" style="margin: auto;" class="alert alert-success text-center col-8" role="alert">
+            <strong>Product added successfully!</strong>
+        </div>
+    </div>
+</form>
+
+<!-- EDIT PRODUCT -->
+<form [formGroup]="productForm" (ngSubmit)="editProduct()" *ngIf="productId != 0" class="col-8 container" [formGroup]="productForm">
+    <br>
+    <h2 class="text-center">Edit product</h2>
+    <hr>
+    <div class="col-10 container">
+        <div class="form-group" [formGroup]="productForm">
+            <label for="productCategoryId">Product Category</label>
+            <select class="form-control" name="productCategoryId" id="productCategoryId"
+                formControlName="productCategoryId">
+                <option [value]="productCategory.productCategoryId" *ngFor="let productCategory of productCategories">
+                    {{productCategory.description}}</option>
+            </select>
+        </div>
+        <div class="form-group" [formGroup]="productForm">
+            <label for="name">Name</label>
+            <input type="text" class="form-control" name="name" id="name" formControlName="name"
+                placeholder="{{product.name}}">
+        </div>
+        <div class="form-group" [formGroup]="productForm">
+            <label for="description">Description</label>
+            <input type="text" class="form-control" name="description" id="description" formControlName="description"
+                placeholder="{{product.description}}">
+        </div>
+        <div class="form-group" [formGroup]="productForm">
+            <label for="price">Price</label>
+            <input type="number" class="form-control" name="price" id="price" formControlName="price"
+                placeholder="{{product.price}}">
+        </div>
+        <button type="submit" data-toggle="alert"
+            class="btn btn-lg btn-warning float-right">Edit</button>
+
+        <div *ngIf="alert" style="margin: auto;" class="alert alert-success text-center col-8" role="alert">
+            <strong>Product edited successfully!</strong>
+        </div>
+    </div>
+</form>
