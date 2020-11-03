@@ -5,7 +5,7 @@ import { ProductService } from '../../services/product.service';
 import { UserService } from '../../services/user.service';
 import { ProductCategoryService } from 'src/app/services/product-category.service';
 import { ProductCategory } from 'src/app/models/product-category';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-product-add-edit',
@@ -17,8 +17,7 @@ export class ProductAddEditComponent implements OnInit {
 
   productForm: FormGroup;
 
-  product: Product;
-  productAux: Product;
+  product: Product = new Product();
   productId: number = 0;
   productCategoryId: string;
   productCategories: ProductCategory[] = [];
@@ -35,14 +34,14 @@ export class ProductAddEditComponent implements OnInit {
     if (!this.token)
       this.router.navigate(['unauthorized']);
 
-    this.productAux = new Product();
     this.productCategoryId = '0';
     
     this.productForm = new FormGroup({
-      'productCategoryId': new FormControl(""),
-      'name': new FormControl(""),
-      'description': new FormControl(""),
-      'price': new FormControl(0)
+      'productCategoryId': new FormControl(this.product.productCategoryId,
+         [Validators.required],[]),
+      'name': new FormControl(this.product.name, [Validators.required],[]),
+      'description': new FormControl(this.product.description, [Validators.required],[]),
+      'price': new FormControl(this.product.price, [Validators.required],[])
     })
 
     await this.getProductCategories();
@@ -59,14 +58,19 @@ export class ProductAddEditComponent implements OnInit {
     }
   }
 
-  addProduct() {
-    let product = new Product();
-    product.productCategoryId = Number(this.productForm.get('productCategoryId').value);
-    product.name = this.productForm.get('name').value;
-    product.description = this.productForm.get('description').value;
-    product.price = this.productForm.get('price').value;
+  get productCategory(){ return this.productForm.get('productCategoryId')}
+  get name(){ return this.productForm.get('name')}
+  get description(){ return this.productForm.get('description')}
+  get price(){ return this.productForm.get('price')}
 
-    this.productService.save(product)
+  addProduct() {
+    this.product = new Product();
+    this.product.productCategoryId = Number(this.productCategory.value);
+    this.product.name = this.name.value;
+    this.product.description = this.description.value;
+    this.product.price = this.price.value;
+
+    this.productService.save(this.product)
       .then(response => {
         this.alert = true;
       })
@@ -75,13 +79,11 @@ export class ProductAddEditComponent implements OnInit {
   }
 
   editProduct() {
-    this.product.productId = this.productId;
-
     let product = new Product();
-    product.productCategoryId = Number(this.productForm.get('productCategoryId').value);
-    product.name = this.productForm.get('name').value;
-    product.description = this.productForm.get('description').value;
-    product.price = this.productForm.get('price').value;
+    product.productCategoryId = Number(this.productCategory.value);
+    product.name = this.name.value;
+    product.description = this.description.value;
+    product.price = this.price.value;
 
     if (product.productCategoryId != null){
       this.product.productCategoryId = product.productCategoryId;

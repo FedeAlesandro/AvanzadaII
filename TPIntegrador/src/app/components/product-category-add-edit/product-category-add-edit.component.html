@@ -1,25 +1,45 @@
 <!-- ADD PRODUCT CATEGORY-->
-<form *ngIf="productCategoryId == 0" class="col-8 container">
+<form [formGroup]="productCatalogForm" (ngSubmit)="addProductCategory()" *ngIf="productCategoryId == 0"
+    class="col-8 container">
     <br>
     <h2 class="text-center">Add a product category</h2>
     <hr>
-
     <div class="col-10 container">
         <div class="form-group">
             <label for="description">Description</label>
-            <input type="text" class="form-control" name="description" id="description" [(ngModel)]="description"
-                placeholder="Enter the description">
+            <input type="text" class="form-control" name="description" id="description" formControlName="description"
+                placeholder="Enter the description" required>
         </div>
-        <button type="button" (click)="addProductCategory()" class="btn btn-lg btn-success float-right">Add</button>
+        <button type="submit" class="btn btn-lg btn-success float-right"
+            [disabled]="!productCatalogForm.valid">Add</button>
 
-        <div *ngIf="alert" style="margin: auto;" class="alert alert-success text-center col-8" role="alert">
+        <div *ngIf="alert" style="margin: auto;"
+            class="alert alert-success alert-dismissible fade show text-center col-8" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
             <strong>Product category added successfully!</strong>
+        </div>
+    </div>
+
+    <!-- VALIDATIONS -->
+    <div *ngIf="description.invalid && (description.dirty || description.touched)" style="margin: auto;"
+        class="alert alert-danger alert-dismissible fade show text-center col-6" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <div *ngIf="description.errors.required">
+            Description is required
+        </div>
+        <div *ngIf="description.errors.maxlength">
+            Description cannot be longer than 50 characters
         </div>
     </div>
 </form>
 
 <!-- EDIT PRODUCT CATEGORY-->
-<form *ngIf="productCategoryId != 0" class="col-8 container">
+<form [formGroup]="productCatalogForm" (ngSubmit)="editProductCategory()" *ngIf="productCategoryId != 0"
+    class="col-8 container">
     <br>
     <h2 class="text-center">Edit product category</h2>
     <hr>
@@ -27,13 +47,29 @@
     <div class="col-10 container">
         <div class="form-group">
             <label for="description">Description</label>
-            <input type="text" class="form-control" name="description" id="description" [(ngModel)]="description"
-                placeholder="Enter the description">
+            <input type="text" class="form-control" name="description" id="description" formControlName="description"
+                placeholder="Enter the description" required>
         </div>
-        <button type="button" (click)="editProductCategory()" class="btn btn-lg btn-warning float-right">Edit</button>
+        <button type="submit" class="btn btn-lg btn-warning float-right"
+            [disabled]="!description.errors.required && description.invalid">Edit</button>
 
-        <div *ngIf="alert" style="margin: auto;" class="alert alert-success text-center col-8" role="alert">
+        <div *ngIf="alert" style="margin: auto;"
+            class="alert alert-success alert-dismissible fade show text-center col-8" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
             <strong>Product category edited successfully!</strong>
+        </div>
+    </div>
+
+    <!-- VALIDATIONS -->
+    <div *ngIf="!description.errors.required && description.invalid && (description.dirty || description.touched)" style="margin: auto;"
+        class="alert alert-danger alert-dismissible fade show text-center col-6" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <div *ngIf="description.errors.maxlength">
+            Description cannot be longer than 50 characters
         </div>
     </div>
 </form>

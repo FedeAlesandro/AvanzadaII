@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductCategory } from '../../models/product-category';
 import { ProductCategoryService } from '../../services/product-category.service';
@@ -11,10 +12,11 @@ import { UserService } from '../../services/user.service';
 })
 export class ProductCategoryAddEditComponent implements OnInit {
 
-  productCategory: ProductCategory;
-  productCategoryId: number;
-  description: string;
+  productCatalogForm: FormGroup;
 
+  productCategory: ProductCategory = new ProductCategory();
+  productCategoryId: number;
+  
   token: boolean = false;
   alert: boolean = false;
 
@@ -26,7 +28,12 @@ export class ProductCategoryAddEditComponent implements OnInit {
 
     if(!this.token)
       this.router.navigate(['unauthorized']);
-      
+    
+    this.productCatalogForm = new FormGroup({
+      'description': new FormControl(
+        this.productCategory.description, [Validators.required, Validators.maxLength(50)],[])
+    })
+
     this.productCategoryId = Number(this.route.snapshot.paramMap.get('id'));
 
     if (this.productCategoryId != 0) {
@@ -39,9 +46,11 @@ export class ProductCategoryAddEditComponent implements OnInit {
     }
   }
 
+  get description(){ return this.productCatalogForm.get('description')}
+
   addProductCategory() {
     let productCategory = new ProductCategory();
-    productCategory.description = this.description;
+    productCategory.description = this.description.value;
 
     this.productCategoryService.save(productCategory)
       .then(response => {
@@ -52,9 +61,10 @@ export class ProductCategoryAddEditComponent implements OnInit {
   }
 
   editProductCategory() {
-    this.productCategory.productCategoryId = this.productCategoryId;
-    if (this.description != null)
-      this.productCategory.description = this.description;
+    let description = this.description.value;
+
+    if (description != null)
+      this.productCategory.description = description;
 
     this.productCategoryService.edit(this.productCategory)
       .then(response => {

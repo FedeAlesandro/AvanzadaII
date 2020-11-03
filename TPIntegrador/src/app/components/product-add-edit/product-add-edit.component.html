@@ -7,38 +7,83 @@
         <div class="form-group">
             <label for="productCategoryId">Product Category</label>
             <select class="form-control" name="productCategoryId" id="productCategoryId"
-                formControlName="productCategoryId">
+                formControlName="productCategoryId" required>
                 <option [value]="productCategory.productCategoryId" *ngFor="let productCategory of productCategories">
                     {{productCategory.description}}</option>
             </select>
         </div>
 
-        <div class="form-group" [formGroup]="productForm">
+        <div class="form-group">
             <label for="name">Name</label>
             <input type="text" class="form-control" name="name" id="name" formControlName="name"
-                placeholder="Enter your name">
+                placeholder="Enter your name" required>
         </div>
-        <div class="form-group" [formGroup]="productForm">
+        <div class="form-group">
             <label for="description">Description</label>
             <input type="text" class="form-control" name="description" id="description" formControlName="description"
-                placeholder="Enter the description">
+                placeholder="Enter the description" required>
         </div>
-        <div class="form-group" [formGroup]="productForm">
+        <div class="form-group">
             <label for="price">Price</label>
             <input type="number" class="form-control" name="price" id="price" formControlName="price"
-                placeholder="Enter the price">
+                placeholder="Enter the price" required>
         </div>
-        <button type="submit" data-toggle="alert"
-            class="btn btn-lg btn-success float-right">Add</button>
+        <button type="submit" data-toggle="alert" class="btn btn-lg btn-success float-right"
+            [disabled]="!productForm.valid">Add</button>
 
-        <div *ngIf="alert" style="margin: auto;" class="alert alert-success text-center col-8" role="alert">
+        <div *ngIf="alert" style="margin: auto;"
+            class="alert alert-success alert-dismissible fade show text-center col-8" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
             <strong>Product added successfully!</strong>
+        </div>
+
+        <!-- VALIDATIONS -->
+        <div *ngIf="productCategoryId.invalid && (productCategoryId.dirty || productCategoryId.touched)" style="margin: auto;"
+            class="alert alert-danger alert-dismissible fade show text-center col-6" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <div *ngIf="productCategoryId.errors.required">
+                Product category is required
+            </div>
+        </div>
+
+        <div *ngIf="name.invalid && (name.dirty || name.touched)" style="margin: auto;"
+            class="alert alert-danger alert-dismissible fade show text-center col-6" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <div *ngIf="name.errors.required">
+                Name is required
+            </div>
+        </div>
+
+        <div *ngIf="description.invalid && (description.dirty || description.touched)" style="margin: auto;"
+            class="alert alert-danger alert-dismissible fade show text-center col-6" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <div *ngIf="description.errors.required">
+                Description is required
+            </div>
+        </div>
+        <div *ngIf="price.invalid && (price.dirty || price.touched)" style="margin: auto;"
+            class="alert alert-danger alert-dismissible fade show text-center col-6" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <div *ngIf="price.errors.required">
+                Price is required
+            </div>
         </div>
     </div>
 </form>
 
 <!-- EDIT PRODUCT -->
-<form [formGroup]="productForm" (ngSubmit)="editProduct()" *ngIf="productId != 0" class="col-8 container" [formGroup]="productForm">
+<form [formGroup]="productForm" (ngSubmit)="editProduct()" *ngIf="productId != 0" class="col-8 container"
+    [formGroup]="productForm">
     <br>
     <h2 class="text-center">Edit product</h2>
     <hr>
@@ -66,10 +111,13 @@
             <input type="number" class="form-control" name="price" id="price" formControlName="price"
                 placeholder="{{product.price}}">
         </div>
-        <button type="submit" data-toggle="alert"
-            class="btn btn-lg btn-warning float-right">Edit</button>
+        <button type="submit" data-toggle="alert" class="btn btn-lg btn-warning float-right">Edit</button>
 
-        <div *ngIf="alert" style="margin: auto;" class="alert alert-success text-center col-8" role="alert">
+        <div *ngIf="alert" style="margin: auto;"
+            class="alert alert-success alert-dismissible fade show text-center col-8" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
             <strong>Product edited successfully!</strong>
         </div>
     </div>
